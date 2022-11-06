@@ -15,8 +15,8 @@ mongoose.connect(`${connectUrl}`);
 
 app.use(express.json(), helmet(), cors());
 app.use('/api/stories', storyRoutes);
-app.use('/api/auth/', userRoutes);
+app.use('/api/auth', userRoutes);
 
 app.get('/', (req, res) => res.send('Secret Storeis API'));
 
-app.listen(port, () => `listening on port: ${port}`);
+app.listen(port, () => console.log(`listening on port: ${port}`));

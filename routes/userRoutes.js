@@ -1,10 +1,10 @@
-//bring in controllers
+const { registerUser, loginUser } = require('../controllers/userControllers');
 const router = require('express').Router();
 
-//POST login 
-router.post('/', registerUser);
-
 //POST register 
-router.post('/', loginUser);
+router.post('/register', registerUser);
+
+//POST login 
+router.post('/login', loginUser);
 
 module.exports = router;
