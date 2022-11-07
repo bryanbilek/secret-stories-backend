@@ -29,16 +29,14 @@ const loginUser = async (req, res) => {
         const { username, password } = req.body;
         if (!username || !password) res.status(400).json('Please fill in both fields');
         //find the user to login
-        const findUser = await User.findOne({ username });
-        if (!findUser) res.status(404).json('User not found');
+        const user = await User.findOne({ username });
+        if (!user) res.status(404).json('User not found');
         //compare the found user's password with the password of the request coming in
-        const compare = await bcrypt.compare(password, findUser.password);
+        const compare = await bcrypt.compare(password, user.password);
         if (!compare) res.status(401).json('Invalid credentials');
-        //if everything has checked out log in the request successfully 
-        const loggedInUser = await User.create({ username, password });
         //generate a token for the user when they login
-        const token = generateToken(loggedInUser._id, loggedInUser.username);
-        res.status(201).json({ loggedInUser, token });
+        const token = generateToken(user._id, user.username);
+        res.status(201).json({ user, token });
     } catch (error) {
         res.status(500).json(error.message);
     }
